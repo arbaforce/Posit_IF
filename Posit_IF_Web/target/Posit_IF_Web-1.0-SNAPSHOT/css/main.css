@@ -1,0 +1,271 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    color: black;
+    font-size: 15px;
+}
+
+body {
+    background: #FFE59A;
+    min-height: 100%;
+}
+
+button {
+    background: #F5C699;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;
+    padding: 5px 15px;
+    font-size: 15px;
+}
+
+button:hover {
+    background-color: #F9CFA7;
+    cursor: pointer;
+}
+
+button:active {
+    border-left: 4px solid black;
+    border-top: 4px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+#btn-logout {
+    background-image: url('../img/logout.png');
+    background-size: 50px 50px;
+    background-color: rgba(0, 0, 0, 0);
+    width: 50px;
+    height: 50px;
+    border: none;
+    margin-left: 40px;
+    margin-right: 20px;
+}
+
+#btn-logout:hover, #btn-logout:active {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+.btn-nav:first-of-type {
+    margin-top: 40px;
+}
+
+.btn-nav {
+    width: 120px;
+    text-align: right;
+    margin-top: 2px;
+    margin-left: 8px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #CCCCCC;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    border-right: none;
+    border-bottom: 2px solid black;
+}
+
+.btn-nav:hover {
+    background-color: #E0E0E0;
+}
+
+.btn-nav:active {
+    border-left: 3px solid black;
+    border-top: 3px solid black;
+    border-right: none;
+    border-bottom: 1px solid black;
+}
+
+.btn-nav.active {
+    background-color: #FFD966;
+}
+
+header {
+    background: #F7B16A;
+    border-bottom: 2px solid black;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+h1 {
+    font-size: 50px;
+    margin-right: auto;
+}
+
+header p {
+    margin-right: 6px;
+}
+
+footer {
+    border-top: 2px solid black;
+    background: #C1C1C1;
+    padding: 2px 20px;
+    text-align: right;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+section {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    line-height: 2;
+}
+
+section p {
+    line-height: 1;
+    text-align: left;
+}
+
+.right-panel {
+    background-color: #FFD966;
+    border: 2px solid black;
+    margin-top: 10px;
+    margin-right: 10px;
+    height: calc(100vh - 160px);
+    overflow-y: scroll;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-size: 22px;
+    text-align: left;
+}
+
+h2 span {
+    text-transform: none;
+    font-weight: normal;
+    font-size: 15px;
+}
+
+h3 {
+    font-size: 30px;
+    text-align: left; 
+}
+
+hr {
+    border: 1px solid black;
+    margin: 7px 0;
+}
+
+input{
+    border: 2px solid black;
+    height: 20px;
+}
+
+select{
+    border: 2px solid black;
+    height: 20px;
+    width: 75px;
+}
+
+.section_align_left{
+    text-align: left;
+    padding-left: 30px;
+    padding-top: 0px;
+}
+
+.center_section{
+    flex : none;
+    margin:auto;
+    width: 50%;
+    position: absolute;
+    top: 30%;
+    left: 25%;
+}
+
+.left_button{
+    float: left; 
+    margin-left: 35px; 
+    margin-top:10px;
+}
+
+.right_button{
+    float: right; 
+    margin-right: 60px; 
+}
+
+.large_input{
+    width: 90%;
+}
+
+.medium_input{
+    width: 44%;
+}
+
+.medium {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin: 15px 10px 10px 60px;
+}
+
+.medium p {
+    flex-grow: 1;
+    border: 2px solid black;
+    background-color: #CCCCCC;
+    padding: 8px;
+    line-height: 1.3;
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
+.medium img {
+    height: 98px;
+    width: auto;
+}
+
+.medium button {
+    height: 80px;
+}
+
+#infos-profil {
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+#astro-profil {
+    text-align: left;
+}
+
+.astro-bulle {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 99px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.profil-panel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.historic-panel {
+    height: 100%;
+    width: 50%;
+    background: #FFE599;
+    overflow-y: scroll;
+    border: 2px solid black;
+}

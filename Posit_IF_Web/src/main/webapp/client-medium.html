@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Medium POSIT'IF</title>
+        <link type="text/css" rel="stylesheet" href="./css/main.css">
+        <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>POSIT'IF</h1>
+            <p id="message-bienvenue"></p>
+            <button type="button" id="btn-logout" title="Se deconnecter"></button>
+        </header>
+        <main>
+            <nav>
+                <button type="button" id="btn-mediums" class="btn-nav active">Medium</button><br>
+                <button type="button" id="btn-profil" class="btn-nav">Mon profil</button>
+            </nav>
+            <section class="right-panel">
+                <p style="text-align: center; padding: 30px 50px;">
+                    Nos mediums viennent de divers horizons, Posit'IF est la
+                    référence de la voyance en ligne. Parmi les talentueux
+                    voyants mis à votre disposition, vous êtes sûrs de trouver
+                    chaussure à votre pied !
+                </p>
+                <div id="liste-mediums">
+                    
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; POSIT'IF 2018</p>
+        </footer>
+
+        <script src="./js/utils.js"></script>
+        <script>
+            $(function () {
+                $.ajax({
+                    url: './ActionServlet',
+                    type: 'POST',
+                    data: {
+                        action: 'get_client'
+                    },
+                    dataType: 'json'
+                }).done(function (res) {
+                    if(res.erreur) {
+                        window.location = './';
+                    } else {
+                        $('#message-bienvenue').text('Bienvenue ' + res.gender + '. ' + res.firstname + ' ' + res.surname);
+                    }
+                });
+                
+                $.ajax({
+                    url: './ActionServlet',
+                    type: 'POST',
+                    data: {
+                        action: 'display_mediums'
+                    },
+                    dataType: 'json'
+                }).done(function (res) {
+                    if(res.mediums) {
+                        for(let i = 0; i < res.mediums.length; i++) {
+                            let medium = res.mediums[i];
+                            
+                            let s = '<div class="medium">'
+                                + '<img src="./img/voyant.jpg" alt="Photo voyant"><p>Nom: ' + medium.name
+                                + '<br>Bio: ' + medium.biography
+                                + '<br>Talent: ' + medium.talent;
+                        
+                            if(medium.promotion) {
+                                s += '<br>Promotion: ' + medium.promotion;
+                            }
+                            if(medium.school) {
+                                s += '<br>Ecole: ' + medium.school;
+                            }
+                            if(medium.media) {
+                                s += '<br>Support: ' + medium.media;
+                            }
+                            if(medium.cartes) {
+                                s += '<br>Cartes: ' + medium.cartes;
+                            }
+                        
+                            s += '</p>'
+                                + '<button type="button" data-medium-id="'
+                                + medium.id + '">Voyance</button>'
+                                + '</div>'
+                            
+                            $('#liste-mediums').append(s);
+                        }
+                        
+                        $('.medium button').click(function() {
+                           let id_medium = $(this).data('medium-id');
+                           
+                           $.ajax({
+                                url: './ActionServlet',
+                                type: 'POST',
+                                data: {
+                                    action: 'ask_for_voyance',
+                                    idMedium: id_medium
+                                },
+                                dataType: 'json'
+                            }).done(function (res) {
+                                if(res.erreur) {
+                                    ShowDialog(res.erreur);
+                                } else {
+                                    ShowDialog("Votre rendez-vous a bien été pris en compte,"
+                                        + " le medium vous contactera dans les plus brefs délais.");
+                                }
+                            });
+                        });
+                    }
+                });
+                
+                $('#btn-logout').click(function() {
+                    $.ajax({
+                        url: './ActionServlet',
+                        type: 'POST',
+                        data: {
+                           action: 'logout_client'
+                        },
+                        dataType: 'json'
+                    }).done(function (res) {
+                        if(res.erreur) {
+                          ShowDialog(res.erreur);
+                        } else {
+                           window.location = './';
+                        }
+                    });
+                });
+                
+                $('#btn-profil').click(function() {
+                   window.location  = './client-profil.html'; 
+                });
+            });
+        </script>
+    </body>
+</html>

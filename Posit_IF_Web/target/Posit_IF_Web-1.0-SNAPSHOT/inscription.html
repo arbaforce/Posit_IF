@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+     <head>
+        <meta charset="UTF-8">
+        <title>Register to POSIT'IF</title>
+        <link type="text/css" rel="stylesheet" href="./css/main.css">
+        <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>POSIT'IF</h1>
+            <p>Déjà inscrit ? Cliquez ici !</p>
+            <button type="button" id="btn-acc">Se connecter</button>
+        </header>
+        <main>
+            <section>
+                <p>POSIT'IF permettra de répondre à toutes vos questions d'ordre 
+                sentimental, financier ou professionnel dans le strict respect de 
+                la vie privée</p>
+                <br>
+                <img style="width: 100%;" src="./img/sign_in.jpg">
+            </section>
+            <section>
+                <h2>Inscription <span>C'est simple et c'est gratuit !</span></h2>
+                <hr>
+                <section class='section_align_left'>
+                    <form>
+                        <select name="Sexe" id="gender">
+                            <option value ='M'>M</option>
+                            <option value ='Mme'>Mme</option>
+                            <option value ='A'>A</option>
+                        </select><br>
+                        <input id="first-name" type="text" placeholder="Prénom" class="medium_input">
+                        <input id="last-name" type="text" placeholder="Nom" class="medium_input"><br>
+                        <b>Date de naissance :</b><br>
+                        <input id="birth_date" type="date" class="medium_input"><br>
+                        <input id="address" type="text" placeholder="Adresse" class="large_input"><br>
+                        <input id="phone" type="tel" placeholder="Téléphone" class="large_input"><br>
+                        <input id="e-mail" type="email" placeholder="E-mail" class="large_input"><br>
+                        <input id="password" type="password" placeholder="Mot de passe" class="large_input"><br>
+                        <input id="confirm_password" type="password" placeholder="Confirmer mot de passe" class="large_input"><br>
+                        <img id="infobulle" title="En cliquant sur connexion, vous acceptez nos conditions d'utilisation et indiquez que vous avez lu notre politique d'utilisation des données." width="20" src="./img/infobulle.png"> 
+                        <button type="submit" id="create_account" class="right_button">S'inscrire</button>
+                    </form>
+                </section>
+            </section>
+        </main>
+        
+        <script src="./js/utils.js"></script>
+        <script>
+            $(function () {
+                $('#create_account').click(function (e) {
+                    e.preventDefault();
+                    
+                    let gender = $("#gender").val()
+                    let first_name = $("#first-name").val().trim();
+                    let last_name = $("#last-name").val().trim();
+                    let birth_date =$("#birth_date").val();
+                    let address = $("#address").val().trim();
+                    let phone = $("#phone").val();
+                    let email = $("#e-mail").val().trim();
+                    let password = $("#password").val();
+                    let confirm_password = $("#confirm_password").val();
+                    
+                    if(gender===""||first_name===""||last_name===""||birth_date===""
+                            ||address===""||phone===""||email===""
+                            ||password===""||confirm_password===""){
+                        alert("Veuillez compléter tous les champs pour vous inscrire")
+                    }
+                    else if(password!==confirm_password){
+                        alert("Les mots de passe ne correspondent pas. Veuillez réessayer")
+                    }
+                    else{
+                        $.ajax({
+                            url: './ActionServlet',
+                            type: 'POST',
+                            data: {
+                                action: 'sign_in',
+                                gender: gender,
+                                firstName: first_name,
+                                lastName: last_name,
+                                birthDate: birth_date,
+                                address: address,
+                                phone: phone,
+                                email: email,
+                                password: password
+                            },
+                            dataType: 'json'
+                        }).done(function (res) {
+                            if (res.erreur) {
+                                ShowDialog(res.erreur);
+                            } else {
+                                ShowDialog("Votre demande a bien été prise en compte, vous allez un recevoir un email vous indiquant si l'inscription a bien été réalisée.");
+                            }
+                        });
+                    }
+                });
+                
+                $('#btn-acc').click(function () {
+                    window.location = './';
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Profil POSIT'IF</title>
+        <link type="text/css" rel="stylesheet" href="./css/main.css">
+        <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>POSIT'IF</h1>
+            <p id="message-bienvenue"></p>
+            <button type="button" id="btn-logout" title="Se deconnecter"></button>
+        </header>
+        <main>
+            <nav>
+                <button type="button" id="btn-mediums" class="btn-nav">Medium</button><br>
+                <button type="button" id="btn-profil" class="btn-nav active">Mon profil</button>
+            </nav>
+            <section class="right-panel profil-panel">
+                <div style="flex-grow: 1">
+                    <h3>Profil :</h3>
+                    <p id="infos-profil"></p>
+                    <h3>Profil astrologique :</h3>
+                    <table><tbody id="astro-profil"></tbody></table>
+                </div>
+                <div class="historic-panel">
+                    <h3 style="margin-left: 20px;">Historique</h3>
+                    <hr>
+                    <p id="historique-client">
+                    </p>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; POSIT'IF 2018</p>
+        </footer>
+
+        <script src="./js/utils.js"></script>
+        <script>
+            $(function () {
+                $.ajax({
+                    url: './ActionServlet',
+                    type: 'POST',
+                    data: {
+                        action: 'get_client'
+                    },
+                    dataType: 'json'
+                }).done(function (res) {
+                    if(res.erreur) {
+                        window.location = './';
+                    } else {
+                        $('#message-bienvenue').text('Bienvenue ' + res.gender + '. ' + res.firstname + ' ' + res.surname);
+                        
+                        $('#infos-profil').html(
+                            res.firstname + ' '+ res.surname + '<br>'
+                            + res.birthdate + '<br>'
+                            + res.mail + '<br>'
+                            + res.phone
+                        );
+                
+                        $('#astro-profil').html(
+                            '<tr><td style="font-size: 1.1em">Signe du zodiaque</td><td></td><td>' + res.zodiacSign + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Signe astrologique chinois</td><td></td><td>' + res.chineseSign + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Couleur porte-bonheur</td><td><div class="astro-bulle" style="background-color: '
+                            + ColorNameToCode(res.color) + ';"></div></td><td>' + res.color + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Animal totem</td><td></td><td>' + res.totemAnimal + '</td></tr>'
+                        );
+                    }
+                });
+                
+                $.ajax({
+                    url: './ActionServlet',
+                    type: 'POST',
+                    data: {
+                        action: 'historique_client'
+                    },
+                    dataType: 'json'
+                }).done(function (res) {
+                    console.log(res);
+                    if(res.historique) {
+                        $('#historique-client').html(res.historique);
+                    }
+                });
+
+                $('#btn-logout').click(function() {
+                    $.ajax({
+                        url: './ActionServlet',
+                        type: 'POST',
+                        data: {
+                           action: 'logout_client'
+                        },
+                        dataType: 'json'
+                    }).done(function (res) {
+                        if(res.erreur) {
+                          ShowDialog(res.erreur);
+                        } else {
+                           window.location = './';
+                        }
+                    });
+                });
+                
+                $('#btn-mediums').click(function() {
+                   window.location  = './client-medium.html'; 
+                });
+            });
+        </script>
+    </body>
+</html>
