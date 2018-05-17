@@ -64,6 +64,18 @@ public class ActionServlet extends HttpServlet {
                     action = new LoginMediumAction();
                     vue = new DefaultVue();
                     break;
+                case "logout_medium":
+                    action = new LogoutMediumAction();
+                    vue = new DefaultVue();
+                    break;
+                case "get_employe":
+                    action = new GetEmployeAction();
+                    vue = new EmployeVue();
+                    break;
+                case "get_affectations":
+                    action = new GetAffectationsAction();
+                    vue = new AffectationsVue();
+                    break;
             }
         }
         

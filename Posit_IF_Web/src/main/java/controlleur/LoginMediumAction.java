@@ -3,11 +3,7 @@ package controlleur;
 import entite.*;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- *
- * @author Martin
- */
-public class LoginMediumAction extends Action{
+public class LoginMediumAction extends Action {
     
     @Override
     public void execute(HttpServletRequest request) throws Exception {
@@ -20,5 +16,7 @@ public class LoginMediumAction extends Action{
         if(employee == null) {
             throw new Exception("Les identifiants sont incorrects.");
         }
+        
+        request.getSession().setAttribute("employe_id", employee.getIdEmployee());
     }
 }

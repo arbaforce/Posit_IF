@@ -10,14 +10,14 @@
         <header>
             <h1>POSIT'IF</h1>
         </header>
-        <main>
-            <section class="center_section">
+        <main style="justify-content: center;">
+            <section style="max-width: 400px; margin-top: 200px;">
                 <h2>Connexion <span>Uniquement pour les médiums</span></h2>
                 <hr>
                 <form>
                     <input id="connect-email" type="email" placeholder="E-mail" class="large_input"><br>
                     <input id="connect-password" type="password" placeholder="Mot de passe" class="large_input"><br>
-                    <button type="button" id="btn-connect" class="left_button">Se connecter</button><br>
+                    <button type="submit" id="btn-connect" style="margin-right: 100px; margin-top: 20px;">Se connecter</button>
                 </form>
             </section>
         </main>
@@ -28,7 +28,9 @@
          <script src="./js/utils.js"></script>
         <script>
             $(function() {
-               $('#btn-connect').click(function() {
+               $('#btn-connect').click(function(e) {
+                    e.preventDefault();
+                   
                     let email = $('#connect-email').val().trim();
                     let password = $('#connect-password').val();
                    
@@ -44,7 +46,6 @@
                             dataType: 'json'
                         })
                         .done(function(res) {
-                            console.log(res);
                             if(res.erreur) {
                                 ShowDialog(res.erreur);
                             } else {

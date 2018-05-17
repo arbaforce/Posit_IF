@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Employé POSIT'IF</title>
+        <link type="text/css" rel="stylesheet" href="./css/main.css">
+        <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>POSIT'IF</h1>
+            <p>Bienvenue, cher employé !</p>
+            <button type="button" id="btn-logout" title="Se deconnecter"></button>
+        </header>
+        <main>
+            <nav>
+                <button type="button" id="btn-accueil" class="btn-nav">Accueil</button><br>
+                <button type="button" id="btn-tableau-bord" class="btn-nav active">Tableau de bord</button>
+            </nav>
+            <section class="right-panel profil-panel" style="align-items: center;">
+                <div class="graphic-container">
+                    <div id="container-voyances-medium"></div>
+                    <p>Total de voyances demandées par medium</p>
+                </div>
+                <div class="graphic-container">
+                    <div id="container-voyances-employe"></div>
+                    <p>Total de voyances réalisées par employé</p>
+                </div>
+                <div class="graphic-container">
+                    <div id="container-repartition-voyances"></div>
+                    <p>Répartition des voyances entre employés</p>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; POSIT'IF 2018</p>
+        </footer>
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="./js/utils.js"></script>
+        <script>
+            $(function () {
+                
+                let data = [
+                    {
+                        name: 'Lucie',
+                        y: 20
+                    },
+                    {
+                        name: 'Marcel',
+                        y: 5
+                    },
+                    {
+                        name: 'Noémie',
+                        y: 7
+                    },
+                    {
+                        name: 'Oscar',
+                        y: 13
+                    }];
+            
+                Highcharts.chart('container-voyances-medium', {
+                    chart: { type: 'column', backgroundColor: '#FFD966' },
+                    title: { text: '' },
+                    credits: { enabled: false },
+                    series: [{ data: data }]
+                });
+                
+                Highcharts.chart('container-voyances-employe', {
+                    chart: { type: 'column', backgroundColor: '#FFD966' },
+                    title: { text: '' },
+                    credits: { enabled: false },
+                    series: [{ data: data }]
+                });
+                
+                Highcharts.chart('container-repartition-voyances', {
+                    chart: { type: 'pie', backgroundColor: '#FFD966' },
+                    title: { text: '' },
+                    credits: { enabled: false },
+                    series: [{ data: data, dataLabels: {
+                        enabled: true,
+                        style: {
+                            textOutline: false 
+                        }
+                    } }]
+                });
+                
+                $('#btn-logout').click(function() {
+                    $.ajax({
+                        url: './ActionServlet',
+                        type: 'POST',
+                        data: {
+                           action: 'logout_medium'
+                        },
+                        dataType: 'json'
+                    }).done(function (res) {
+                        if(res.erreur) {
+                          ShowDialog(res.erreur);
+                        } else {
+                           window.location = './';
+                        }
+                    });
+                });
+                
+                $('#btn-accueil').click(function() {
+                   window.location  = './employe.html'; 
+                });
+            });
+        </script>
+    </body>
+</html>
