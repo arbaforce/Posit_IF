@@ -60,19 +60,25 @@ public class Voyance implements Serializable {
 
     public String getBeginDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String date = sdf.format(this.beginDate);
+        String date = null;
+        if(beginDate!=null)
+            date = sdf.format(this.beginDate);
         return date;
     }
 
     public String getBeginHour() {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
-        String date = sdf.format(this.beginHour);
+        String date = null;
+        if(beginHour!=null)
+            date = sdf.format(this.beginHour);
         return date;
     }
 
     public String getEndHour() {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
-        String date = sdf.format(this.endHour);
+        String date = null;
+        if(endHour!=null)
+            date = sdf.format(this.endHour);
         return date;
     }
     
