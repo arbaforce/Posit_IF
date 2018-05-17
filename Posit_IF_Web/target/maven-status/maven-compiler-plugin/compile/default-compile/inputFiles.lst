@@ -6,8 +6,15 @@
 /Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/vue/HistoriqueClientVue.java
 /Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/controlleur/GetClientAction.java
 /Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/controlleur/SignInAction.java
+/Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/vue/EmployeVue.java
+/Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/controlleur/GetTableauDeBordAction.java
 /Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/vue/ListeMediumsVue.java
 /Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/vue/DefaultVue.java
+/Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/vue/TableauDeBordVue.java
+/Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/controlleur/GetAffectationsAction.java
+/Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/controlleur/LogoutMediumAction.java
+/Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/controlleur/GetEmployeAction.java
+/Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/vue/AffectationsVue.java
 /Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/controlleur/Action.java
 /Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/vue/ClientVue.java
 /Users/Martin/Dropbox/cours/3A/DASI/positif/Posit_IF/Posit_IF_Web/src/main/java/controlleur/LogoutClientAction.java

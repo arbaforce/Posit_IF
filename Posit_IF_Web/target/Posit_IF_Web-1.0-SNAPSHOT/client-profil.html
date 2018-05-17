@@ -80,9 +80,20 @@
                     },
                     dataType: 'json'
                 }).done(function (res) {
-                    console.log(res);
                     if(res.historique) {
-                        $('#historique-client').html(res.historique);
+                        for(let i = 0; i < res.historique.length; i++) {
+                            let voyance = res.historique[i]; 
+                            
+                            let s = '<div style="padding-left : 10px">'+voyance.medium_name+', ';
+                            
+                            if(voyance.date){
+                                s += 'le '+voyance.date+', ';
+                            }
+                                    
+                            s += 'durée : '+ voyance.duree+'</div> <br>';
+                            
+                            $('#historique-client').append(s);
+                        }
                     }
                 });
 

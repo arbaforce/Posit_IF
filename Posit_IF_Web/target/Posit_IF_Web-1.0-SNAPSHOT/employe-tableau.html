@@ -40,51 +40,84 @@
         <script src="./js/utils.js"></script>
         <script>
             $(function () {
-                
-                let data = [
-                    {
-                        name: 'Lucie',
-                        y: 20
+                $.ajax({
+                    url: './ActionServlet',
+                    type: 'POST',
+                    data: {
+                        action: 'get_tableaux'
                     },
-                    {
-                        name: 'Marcel',
-                        y: 5
-                    },
-                    {
-                        name: 'Noémie',
-                        y: 7
-                    },
-                    {
-                        name: 'Oscar',
-                        y: 13
-                    }];
-            
-                Highcharts.chart('container-voyances-medium', {
-                    chart: { type: 'column', backgroundColor: '#FFD966' },
-                    title: { text: '' },
-                    credits: { enabled: false },
-                    series: [{ data: data }]
-                });
-                
-                Highcharts.chart('container-voyances-employe', {
-                    chart: { type: 'column', backgroundColor: '#FFD966' },
-                    title: { text: '' },
-                    credits: { enabled: false },
-                    series: [{ data: data }]
-                });
-                
-                Highcharts.chart('container-repartition-voyances', {
-                    chart: { type: 'pie', backgroundColor: '#FFD966' },
-                    title: { text: '' },
-                    credits: { enabled: false },
-                    series: [{ data: data, dataLabels: {
-                        enabled: true,
-                        style: {
-                            textOutline: false 
+                    dataType: 'json'
+                }).done(function (res) {
+                    let dataHistogrammeMedium = [];
+                    let dataHistogrammeEmploye = [];
+                    let dataCamembertEmploye = [];
+                    
+                    for(let name in res.histogrammeVoyancesMediums) {
+                        let data = res.histogrammeVoyancesMediums[name];
+                        
+                        dataHistogrammeMedium.push(
+                            {
+                                name: name,
+                                y: data
+                            });
+                    }
+                    
+                    for(let name in res.histogrammeVoyancesEmployes) {
+                        let data = res.histogrammeVoyancesEmployes[name];
+                        
+                        dataHistogrammeEmploye.push(
+                            {
+                                name: name,
+                                y: data
+                            });
+                    }
+                    
+                    for(let name in res.camembertVoyancesEmployes) {
+                        let data = res.camembertVoyancesEmployes[name];
+                        
+                        name = name.trim();
+                        if(name.indexOf(' ') > -1){
+                            console.log(name)
+                            name = name.split(' ')[1];
                         }
-                    } }]
+                        dataCamembertEmploye.push(
+                            {
+                                name: name,
+                                y: data
+                            });
+                    }
+
+                    Highcharts.chart('container-voyances-medium', {
+                        chart: { type: 'column', backgroundColor: '#FFD966' },
+                        title: { text: '' },
+                        credits: { enabled: false },
+                        series: [{ data: dataHistogrammeMedium }]
+                    });
+                    
+                    Highcharts.chart('container-voyances-employe', {
+                        chart: { type: 'column', backgroundColor: '#FFD966' },
+                        title: { text: '' },
+                        credits: { enabled: false },
+                        legend: {enabled: false},
+                        series: [{data: dataHistogrammeEmploye }]
+                    });
+
+                    Highcharts.chart('container-repartition-voyances', {
+                        chart: { type: 'pie', backgroundColor: '#FFD966' },
+                        title: { text: '' },
+                        credits: { enabled: false },
+                        series: [{ data: dataCamembertEmploye, dataLabels: {
+                            enabled: true,
+                            style: {
+                                textOutline: false 
+                            }
+                        } }]
+                    });
+
+                    
+                    
                 });
-                
+
                 $('#btn-logout').click(function() {
                     $.ajax({
                         url: './ActionServlet',
@@ -101,10 +134,11 @@
                         }
                     });
                 });
-                
+
                 $('#btn-accueil').click(function() {
                    window.location  = './employe.html'; 
                 });
+
             });
         </script>
     </body>

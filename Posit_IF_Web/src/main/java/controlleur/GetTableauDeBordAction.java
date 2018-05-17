@@ -5,6 +5,7 @@ import entite.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javafx.util.Pair;
 
 public class GetTableauDeBordAction extends Action {
@@ -21,9 +22,9 @@ public class GetTableauDeBordAction extends Action {
         
         HashMap<Long, String> nomMediums = new HashMap<Long,String>();
         
-        Iterator it = donneesVoyancesMediums.entrySet().iterator();
-        while(it.hasNext()) {
-            long idMedium = (long) it.next();
+        
+        for (Map.Entry<Long,Integer> it : donneesVoyancesMediums.entrySet()) {
+            long idMedium = it.getKey();
             String nom = this.service.findMedium(idMedium).getName();
             nomMediums.put(idMedium, nom);
         }

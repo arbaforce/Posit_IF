@@ -76,6 +76,10 @@ public class ActionServlet extends HttpServlet {
                     action = new GetAffectationsAction();
                     vue = new AffectationsVue();
                     break;
+                case "get_tableaux":
+                    action = new GetTableauDeBordAction();
+                    vue = new TableauDeBordVue();
+                    break;
             }
         }
         

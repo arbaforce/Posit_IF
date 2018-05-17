@@ -4,13 +4,13 @@ package vue;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.*;
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.String;
 import entite.Employee;
 import entite.Medium;
 import entite.Voyance;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javafx.util.Pair;
 
 public class TableauDeBordVue extends Vue {
@@ -26,21 +26,20 @@ public class TableauDeBordVue extends Vue {
         JsonObject histogrammeVoyancesEmployes = new JsonObject();
         JsonObject camembertVoyancesEmployes = new JsonObject();
         
-        Iterator it = donneesVoyancesMediums.entrySet().iterator();
-        while (it.hasNext()){
-            long idMedium = (long) it.next();
-            
-            histogrammeVoyancesMediums.addProperty(nomMediums.get(idMedium), donneesVoyancesMediums.get(idMedium));
+        for (Map.Entry<Long,Integer> it : donneesVoyancesMediums.entrySet()) {
+            histogrammeVoyancesMediums.addProperty(nomMediums.get(it.getKey()), it.getValue());
         }
         
-        it = donneesVoyancesEmployes.entrySet().iterator();
-        while (it.hasNext()){
-            Employee employe = (Employee) it.next();
+        for (Map.Entry<Employee,Pair<Long,Float>> it : donneesVoyancesEmployes.entrySet()) {
+            Employee employe = (Employee) it.getKey();
             
-            histogrammeVoyancesEmployes.addProperty(employe.getSurname(), donneesVoyancesEmployes.get(employe).getKey());
+            String nom = employe.getFirstname()+" "+employe.getSurname();
             
-            camembertVoyancesEmployes.addProperty(employe.getSurname(), donneesVoyancesEmployes.get(employe).getValue());
+            histogrammeVoyancesEmployes.addProperty(nom, it.getValue().getKey());
+            
+            camembertVoyancesEmployes.addProperty(nom, it.getValue().getValue());
         }
+        
         
         JsonObject container = new JsonObject();
         
