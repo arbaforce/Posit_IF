@@ -3,7 +3,10 @@
      <head>
         <meta charset="UTF-8">
         <title>Register to POSIT'IF</title>
+        
         <link type="text/css" rel="stylesheet" href="./css/main.css">
+        <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+        
         <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
     </head>
     <body>
@@ -23,24 +26,24 @@
             <section>
                 <h2>Inscription <span>C'est simple et c'est gratuit !</span></h2>
                 <hr>
-                <section class='section_align_left'>
+                <section>
                     <form>
-                        <select name="Sexe" id="gender">
+                        <select name="Sexe" id="gender" style="width: 80px;">
                             <option value ='M'>M</option>
                             <option value ='Mme'>Mme</option>
                             <option value ='A'>A</option>
                         </select><br>
-                        <input id="first-name" type="text" placeholder="Prénom" class="medium_input">
-                        <input id="last-name" type="text" placeholder="Nom" class="medium_input"><br>
+                        <input id="first-name" type="text" placeholder="Prénom" style="width: 44%;">
+                        <input id="last-name" type="text" placeholder="Nom" style="width: 44%;"><br>
                         <b>Date de naissance :</b><br>
-                        <input id="birth_date" type="date" class="medium_input"><br>
-                        <input id="address" type="text" placeholder="Adresse" class="large_input"><br>
-                        <input id="phone" type="tel" placeholder="Téléphone" class="large_input"><br>
-                        <input id="e-mail" type="email" placeholder="E-mail" class="large_input"><br>
-                        <input id="password" type="password" placeholder="Mot de passe" class="large_input"><br>
-                        <input id="confirm_password" type="password" placeholder="Confirmer mot de passe" class="large_input"><br>
-                        <img id="infobulle" title="En cliquant sur connexion, vous acceptez nos conditions d'utilisation et indiquez que vous avez lu notre politique d'utilisation des données." width="20" src="./img/infobulle.png"> 
-                        <button type="submit" id="create_account" class="right_button">S'inscrire</button>
+                        <input id="birth_date" type="date" style="max-width: 150px;"> <label for="birth_date"><i class="far fa-calendar-alt"></i></label><br>
+                        <input id="address" type="text" placeholder="Adresse"><br>
+                        <input id="phone" type="tel" placeholder="Téléphone"><br>
+                        <input id="e-mail" type="email" placeholder="E-mail"><br>
+                        <input id="password" type="password" placeholder="Mot de passe"><br>
+                        <input id="confirm_password" type="password" placeholder="Confirmer mot de passe"><br>
+                        <i style="font-size: 22px;" class="fas fa-info-circle" title="En cliquant sur connexion, vous acceptez nos conditions d'utilisation et indiquez que vous avez lu notre politique d'utilisation des données."></i>
+                        <button type="submit" id="create_account" style="position: absolute; right: 5.5%;">S'inscrire</button>
                     </form>
                 </section>
             </section>
@@ -55,23 +58,22 @@
                 $('#create_account').click(function (e) {
                     e.preventDefault();
                     
-                    let gender = $("#gender").val()
-                    let first_name = $("#first-name").val().trim();
-                    let last_name = $("#last-name").val().trim();
-                    let birth_date =$("#birth_date").val();
-                    let address = $("#address").val().trim();
-                    let phone = $("#phone").val();
-                    let email = $("#e-mail").val().trim();
-                    let password = $("#password").val();
-                    let confirm_password = $("#confirm_password").val();
+                    let gender = $('#gender').val()
+                    let first_name = $('#first-name').val().trim();
+                    let last_name = $('#last-name').val().trim();
+                    let birth_date =$('#birth_date').val();
+                    let address = $('#address').val().trim();
+                    let phone = $('#phone').val();
+                    let email = $('#e-mail').val().trim();
+                    let password = $('#password').val();
+                    let confirm_password = $('#confirm_password').val();
                     
-                    if(gender===""||first_name===""||last_name===""||birth_date===""
-                            ||address===""||phone===""||email===""
-                            ||password===""||confirm_password===""){
-                        alert("Veuillez compléter tous les champs pour vous inscrire")
+                    if(!gender || !first_name || !last_name || !birth_date
+                        || !address || !phone || !email || !password || !confirm_password) {
+                        ShowDialog("Veuillez compléter tous les champs pour vous inscrire.")
                     }
-                    else if(password!==confirm_password){
-                        alert("Les mots de passe ne correspondent pas. Veuillez réessayer")
+                    else if(password !== confirm_password) {
+                        ShowDialog("Les mots de passe ne correspondent pas, veuillez réessayer.")
                     }
                     else{
                         $.ajax({

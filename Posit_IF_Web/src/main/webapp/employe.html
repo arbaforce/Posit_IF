@@ -76,6 +76,26 @@
                             
                             $('#liste-affectations').append(s);
                         }
+                        
+                        $('.affectation button').click(function() {
+                           let id_voyance = $(this).data('voyance-id');
+                           
+                           $.ajax({
+                                url: './ActionServlet',
+                                type: 'POST',
+                                data: {
+                                    action: 'realiser_voyance',
+                                    idVoyance: id_voyance
+                                },
+                                dataType: 'json'
+                            }).done(function (res) {
+                                if(res.erreur) {
+                                    ShowDialog(res.erreur);
+                                } else {
+                                    window.location = './employe-voyance.html'
+                                }
+                            });
+                        });
                     }
                 });
                 

@@ -8,5 +8,6 @@ public class LogoutMediumAction extends Action {
     public void execute(HttpServletRequest request) throws Exception {
         
         request.getSession().removeAttribute("employe_id");
+        request.getSession().removeAttribute("voyance_id");
     }
 }

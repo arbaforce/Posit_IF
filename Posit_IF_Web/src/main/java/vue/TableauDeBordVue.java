@@ -4,13 +4,8 @@ package vue;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.*;
-import entite.Employee;
-import entite.Medium;
-import entite.Voyance;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import entite.*;
+import java.util.*;
 import javafx.util.Pair;
 
 public class TableauDeBordVue extends Vue {

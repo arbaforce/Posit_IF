@@ -14,32 +14,182 @@
         </header>
         <main>
             <section>
-                <div>
-                    <button type="button">Commencer</button>
-                    <button type="button">Terminer</button>
+                <div id="voyance-buttons">
+                    <button type="button" id="btn-commencer-voyance" disabled>Commencer</button>
+                    <button type="button" id="btn-terminer-voyance" disabled>Terminer</button>
                 </div>
-                <textarea cols="60" rows="12" placeholder="Laisser un commentaire...">
-                </textarea>
+                <textarea cols="60" rows="12" id="commentaire" placeholder="Laisser un commentaire..."></textarea>
             </section>
             <section>
-                <button type="button" id="btn-accueil" title="Quitter voyance"></button>
+                <div style="text-align: right;">
+                    <button disabled type="button" id="btn-quitter-voyance" title="Quitter voyance"></button>
+                </div>
                 <p id="client-profil">
-                    Profil :
                 </p>
-                <div>
-                    <button type="button">Prédictions</button>
-                    <button type="button">Historique</button>
-                    <button type="button">Profil astro</button>
+                <div class="voyance-client-buttons">
+                    <button type="button" id="btn-predictions">Prédictions</button>
+                    <button type="button" id="btn-historique">Historique</button>
+                    <button type="button" id="btn-profil-astro">Profil astro</button>
                 </div>
             </section>
         </main>
         <footer>
             <p>&copy; POSIT'IF 2018</p>
         </footer>
-
+        
         <script src="./js/utils.js"></script>
         <script>
+            var clientVoyance = null;
+            
             $(function () {
+                $('#btn-commencer-voyance').prop('disabled', true);
+                $('#btn-terminer-voyance').prop('disabled', true);
+                $('#btn-quitter-voyance').prop('disabled', true);
+                $('#commentaire').val('');
+                
+                $.ajax({
+                    url: './ActionServlet',
+                    type: 'POST',
+                    data: {
+                        action: 'get_client_voyance'
+                    },
+                    dataType: 'json'
+                }).done(function (res) {
+                    if(res.erreur) {
+                        window.location = './employe.html';
+                    } else {
+                        clientVoyance = res;
+                        
+                        $('#client-profil').html('<span style="font-size: 22px;">'
+                            + 'Profil :</span><br><br>'
+                            + res.surname + ' ' + res.firstname + '<br>'
+                            + res.birthdate + '<br>'
+                            + res.mail + '<br>'
+                            + res.phone
+                        );
+                
+                        $('#btn-commencer-voyance').prop('disabled', false);
+                    }
+                });
+                
+                $('#btn-commencer-voyance').click(function() {
+                    $.ajax({
+                        url: './ActionServlet',
+                        type: 'POST',
+                        data: {
+                            action: 'begin_voyance'
+                        },
+                        dataType: 'json'
+                    }).done(function (res) {
+                        if(res.erreur) {
+                            ShowDialog(res.erreur, 'Erreur');
+                        } else {
+                            $('#btn-terminer-voyance').prop('disabled', false);
+                            $('#btn-commencer-voyance').prop('disabled', true);
+                        }
+                    });
+                });
+                
+                $('#btn-terminer-voyance').click(function() {
+                   $.ajax({
+                        url: './ActionServlet',
+                        type: 'POST',
+                        data: {
+                            action: 'end_voyance'
+                        },
+                        dataType: 'json'
+                    }).done(function (res) {
+                        if(res.erreur) {
+                            ShowDialog(res.erreur, 'Erreur');
+                        } else {
+                            $('#btn-quitter-voyance').prop('disabled', false);
+                            $('#btn-terminer-voyance').prop('disabled', true);
+                        }
+                    });
+                });
+                
+                $('#btn-quitter-voyance').click(function() {
+                   let commentaire = $('#commentaire').val();
+                   
+                   $.ajax({
+                        url: './ActionServlet',
+                        type: 'POST',
+                        data: {
+                            action: 'close_voyance',
+                            commentaire: commentaire
+                        },
+                        dataType: 'json'
+                    }).done(function (res) {
+                        if(res.erreur) {
+                            ShowDialog(res.erreur, 'Erreur');
+                        } else {
+                            window.location = './employe.html';
+                        }
+                    });
+                });
+                
+                $('#btn-profil-astro').click(function() {
+                   if(clientVoyance) {
+                       ShowDialog('<table><tbody><tr><td style="font-size: 1.1em">Signe du zodiaque&emsp;</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
+                            + ZodiacSignToCode(clientVoyance.zodiacSign) + '"/></div></td><td>&emsp;' + clientVoyance.zodiacSign + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Signe astrologique chinois&emsp;</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
+                            + ChineseSignToCode(clientVoyance.chineseSign) + '"/></div></td><td>&emsp;' + clientVoyance.chineseSign + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Couleur porte-bonheur&emsp;</td><td><div class="astro-bulle" style="background-color: '
+                            + ColorNameToCode(clientVoyance.color) + ';"></div></td><td>&emsp;' + clientVoyance.color + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Animal totem&emsp;</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
+                            + 'notFound.png"/></div></td><td>&emsp;' + clientVoyance.totemAnimal + '</td></tr></tbody></table>', 'Profil du client');
+                   }
+                });
+                
+                $('#btn-predictions').click(function() {
+                   if(clientVoyance) {
+                        $.ajax({
+                            url: './ActionServlet',
+                            type: 'POST',
+                            data: {
+                                action: 'get_predictions'
+                            },
+                            dataType: 'json'
+                        }).done(function (res) {
+                            if(res.predictions) {
+                                ShowDialog(res.predictions, 'Prédictions client');
+                            }
+                        });
+                   }
+                });
+                
+                $('#btn-historique').click(function() {
+                   if(clientVoyance) {
+                        $.ajax({
+                            url: './ActionServlet',
+                            type: 'POST',
+                            data: {
+                                action: 'get_historique_client_voyance'
+                            },
+                            dataType: 'json'
+                        }).done(function (res) {
+                            if(res.historique) {
+                                let s = '';
+                                
+                                for(let i = 0; i < res.historique.length; i++) {
+                                    let historique = res.historique[i];
+                                    
+                                    s += '<p class="histo-client-dialog">'
+                                        + 'Medium : ' + historique.medium_name
+                                        + '<br>Employé : ' + historique.employe_firstname 
+                                        + ' ' + historique.employe_surname
+                                        + '<br>Durée : ' + historique.duree
+                                        + ' le ' + historique.date
+                                        + '<br>Commentaire : ' + historique.comment
+                                        + '</p>';
+                                }
+                                
+                                ShowDialog(s, 'Historique client');
+                            }
+                        });
+                    }
+                });
+                
                 $('#btn-logout').click(function() {
                     $.ajax({
                         url: './ActionServlet',

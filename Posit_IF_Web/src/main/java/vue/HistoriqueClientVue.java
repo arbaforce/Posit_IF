@@ -4,7 +4,6 @@ package vue;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.*;
-import entite.Medium;
 import entite.Voyance;
 import java.util.List;
 
@@ -27,9 +26,9 @@ public class HistoriqueClientVue extends Vue {
                 historiqueObject.addProperty("date", v.getBeginDate());
             }
             
-            if(v.getBeginHour()==null && v.getDuration()=="00h00mn") {
+            if(v.getBeginHour()==null && v.getDuration().equals("00h00mn")) {
                 historiqueObject.addProperty("duree", "n'a pas encore eu lieu");
-            } else if(v.getDuration()=="00h00mn") {
+            } else if(v.getDuration().equals("00h00mn")) {
                 historiqueObject.addProperty("duree", "en cours");
             } else{
                 historiqueObject.addProperty("duree", v.getDuration());
@@ -39,9 +38,7 @@ public class HistoriqueClientVue extends Vue {
         }
         
         JsonObject container = new JsonObject();
-        
         container.add("historique", historiqueContainer);
-        
         outputJson(response, container);
     }
 }

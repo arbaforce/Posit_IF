@@ -60,14 +60,14 @@
                         );
                 
                         $('#astro-profil').html(
-                            '<tr><td style="font-size: 1.1em">Signe du zodiaque</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
-                            + ZodiacSignToCode(res.zodiacSign) + '"/></div></td><td>' + res.zodiacSign + '</td></tr>'
-                            + '<tr><td style="font-size: 1.1em">Signe astrologique chinois</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
-                            + ChineseSignToCode(res.chineseSign) + '"/></div></td><td>' + res.chineseSign + '</td></tr>'
-                            + '<tr><td style="font-size: 1.1em">Couleur porte-bonheur</td><td><div class="astro-bulle" style="background-color: '
-                            + ColorNameToCode(res.color) + ';"></div></td><td>' + res.color + '</td></tr>'
-                            + '<tr><td style="font-size: 1.1em">Animal totem</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
-                            + 'notFound.png"/></div></td><td>' + res.totemAnimal + '</td></tr>'
+                            '<tr><td style="font-size: 1.1em">Signe du zodiaque&emsp;</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
+                            + ZodiacSignToCode(res.zodiacSign) + '"/></div></td><td>&emsp;' + res.zodiacSign + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Signe astrologique chinois&emsp;</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
+                            + ChineseSignToCode(res.chineseSign) + '"/></div></td><td>&emsp;' + res.chineseSign + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Couleur porte-bonheur&emsp;</td><td><div class="astro-bulle" style="background-color: '
+                            + ColorNameToCode(res.color) + ';"></div></td><td>&emsp;' + res.color + '</td></tr>'
+                            + '<tr><td style="font-size: 1.1em">Animal totem&emsp;</td><td><div class="astro-bulle" style="background-color:white"> <img class="astro-bulle" src= "./img/'
+                            + 'notFound.png"/></div></td><td>&emsp;' + res.totemAnimal + '</td></tr>'
                         );
                     }
                 });
@@ -84,14 +84,14 @@
                         for(let i = 0; i < res.historique.length; i++) {
                             let voyance = res.historique[i]; 
                             
-                            let s = '<div style="padding-left : 10px">'+voyance.medium_name+', ';
-                            
+                            let s = '<div style="padding-left: 5px;">'+voyance.medium_name+', ';
+                           
                             if(voyance.date){
                                 s += 'le '+voyance.date+', ';
                             }
-                                    
+                                   
                             s += 'durée : '+ voyance.duree+'</div> <br>';
-                            
+                          
                             $('#historique-client').append(s);
                         }
                     }

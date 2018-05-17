@@ -1,7 +1,27 @@
 
-function ShowDialog(message) {
+function ShowDialog(message, title = 'Information') {
     
-    alert(message);
+    $('.modal-background').remove();
+    
+    $(document.body).append('<div class="modal-background">'
+        + '<div class="modal">'
+        + '<div class="modal-title">' + title + '</div>'
+        + '<div class="modal-content">'
+        + message
+        + '</div>'
+        + '<button type="button">Ok</button>'
+        + '</div>'
+        + '</div>'
+    );
+    
+    $('.modal-background').click(function(e) {
+        if(e.target === this) {
+            $(this).remove();
+        }
+    });
+    $('.modal button').click(function() {
+        $('.modal-background').remove();
+    });
 }
 
 function ColorNameToCode(colorName) {

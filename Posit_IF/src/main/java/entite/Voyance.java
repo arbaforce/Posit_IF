@@ -85,13 +85,29 @@ public class Voyance implements Serializable {
     public String getDuration(){
         long oneHour=1000*60*60;
         long oneMinut=1000*60;
-        String result;
+        
+        String result = "";
+        
         if(beginHour!=null && endHour !=null){
             long duration=Math.abs(beginHour.getTime()-endHour.getTime());
-            result= Math.floor(duration/oneHour) +"h"+Math.floor(duration/oneMinut)+"mn";
+            
+            long hours = 0;
+            if(duration >= oneHour) {
+                hours = duration / oneHour;
+                duration -= hours * oneHour;
+                
+                result += hours + "h";
+            }
+            
+            long minutes = duration / oneMinut;
+            duration -= hours * oneMinut;
+
+            result += minutes + "mn";
+            
         }else{
             result="00h00mn";
         }
+        
         return result;
     }
 

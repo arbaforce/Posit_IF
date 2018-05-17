@@ -48,102 +48,102 @@
                     },
                     dataType: 'json'
                 }).done(function (res) {
-                    let HistogrammeMedium = {
-                        labels : ['Medium'],
-                        data : []
-                    };
-                    let HistogrammeEmploye= {
-                        labels : ['Employe'],
-                        data : []
-                    };;
-                    let CamembertEmploye= {
-                        label : 'Employe',
-                        data : []
-                    };;
-                    
-                    
-                    for(let name in res.histogrammeVoyancesMediums) {
-                        let data = res.histogrammeVoyancesMediums[name];
+                    if(res.erreur) {
+                        ShowDialog(res.erreur, 'Erreur');
+                    } else {
                         
-                        if(data!==0){
-                            HistogrammeMedium.data.push(
-                                {
-                                    name: name,
-                                    data: [data]
-                                });
+                        let HistogrammeMedium = {
+                            labels : ['Medium'],
+                            data : []
+                        };
+                        let HistogrammeEmploye= {
+                            labels : ['Employe'],
+                            data : []
+                        };;
+                        let CamembertEmploye= {
+                            label : 'Employe',
+                            data : []
+                        };;
+
+
+                        for(let name in res.histogrammeVoyancesMediums) {
+                            let data = res.histogrammeVoyancesMediums[name];
+
+                            if(data!==0){
+                                HistogrammeMedium.data.push(
+                                    {
+                                        name: name,
+                                        data: [data]
+                                    });
+                            }
                         }
-                    }
-                    
-                    
-                    for(let name in res.histogrammeVoyancesEmployes) {
-                        let data = res.histogrammeVoyancesEmployes[name];
-                        
-                        if(data!==0){
-                            HistogrammeEmploye.data.push(
-                                {
-                                    name: name,
-                                    data: [data]
-                                });
+
+
+                        for(let name in res.histogrammeVoyancesEmployes) {
+                            let data = res.histogrammeVoyancesEmployes[name];
+
+                            if(data!==0){
+                                HistogrammeEmploye.data.push(
+                                    {
+                                        name: name,
+                                        data: [data]
+                                    });
+                            }
                         }
-                    }
-                    
-                    
-                    for(let name in res.camembertVoyancesEmployes) {
-                        let data = res.camembertVoyancesEmployes[name];
-                        
-                        if(data!==0){
-                            name = name.trim();
-                            if(name.indexOf(' ') > -1){
-                                name = name.split(' ')[1];
+
+
+                        for(let name in res.camembertVoyancesEmployes) {
+                            let data = res.camembertVoyancesEmployes[name];
+
+                            if(data!==0){
+                                name = name.trim();
+                                if(name.indexOf(' ') > -1){
+                                    name = name.split(' ')[1];
+                                }
+
+                                CamembertEmploye.data.push(
+                                    {
+                                        name: name,
+                                        y: data
+                                    });
                             }
 
-                            CamembertEmploye.data.push(
-                                {
-                                    name: name,
-                                    y: data
-                                });
                         }
-                                
+
+                        Highcharts.chart('container-voyances-medium', {
+                            chart: { type: 'column', backgroundColor: '#FFD966' },
+                            title: { text: '' },
+                            xAxis: {categories: HistogrammeMedium.labels},
+                            yAxis: {
+                                title: {text: 'Nombre de voyances demandées'}
+                            },
+                            credits: { enabled: false },
+                            series: HistogrammeMedium.data
+                        });
+
+                        Highcharts.chart('container-voyances-employe', {
+                            chart: { type: 'column', backgroundColor: '#FFD966' },
+                            title: { text: '' },
+                            xAxis: {categories: HistogrammeEmploye.labels},
+                            yAxis: {
+                                title: {text: 'Nombre de voyances assignées'}
+                            },
+                            credits: { enabled: false },
+                            series: HistogrammeEmploye.data
+                        });
+
+                        Highcharts.chart('container-repartition-voyances', {
+                            chart: { type: 'pie', backgroundColor: '#FFD966' },
+                            title: { text: '' },
+                            credits: { enabled: false },
+                            series: [{name: CamembertEmploye.label, data: CamembertEmploye.data, dataLabels: {
+                                enabled: true,
+                                style: {
+                                    textOutline: false 
+                                }
+                            } }]
+                        });
                     }
-                    
-                    console.log(HistogrammeMedium);
-
-                    Highcharts.chart('container-voyances-medium', {
-                        chart: { type: 'column', backgroundColor: '#FFD966' },
-                        title: { text: '' },
-                        xAxis: {categories: HistogrammeMedium.labels},
-                        yAxis: {
-                            title: {text: 'Nombre de voyances demandées'}
-                        },
-                        credits: { enabled: false },
-                        series: HistogrammeMedium.data
-                    });
-                    
-                    Highcharts.chart('container-voyances-employe', {
-                        chart: { type: 'column', backgroundColor: '#FFD966' },
-                        title: { text: '' },
-                        xAxis: {categories: HistogrammeEmploye.labels},
-                        yAxis: {
-                            title: {text: 'Nombre de voyances assignées'}
-                        },
-                        credits: { enabled: false },
-                        series: HistogrammeEmploye.data
-                    });
-
-                    Highcharts.chart('container-repartition-voyances', {
-                        chart: { type: 'pie', backgroundColor: '#FFD966' },
-                        title: { text: '' },
-                        credits: { enabled: false },
-                        series: [{name: CamembertEmploye.label, data: CamembertEmploye.data, dataLabels: {
-                            enabled: true,
-                            style: {
-                                textOutline: false 
-                            }
-                        } }]
-                    });
-
-                    
-                    
                 });
 
                 $('#btn-logout').click(function() {

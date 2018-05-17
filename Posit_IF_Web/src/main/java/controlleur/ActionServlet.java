@@ -76,6 +76,34 @@ public class ActionServlet extends HttpServlet {
                     action = new GetAffectationsAction();
                     vue = new AffectationsVue();
                     break;
+                case "realiser_voyance":
+                    action = new RealiserVoyanceAction();
+                    vue = new DefaultVue();
+                    break;
+                case "get_client_voyance":
+                    action = new GetClientVoyanceAction();
+                    vue = new ClientVue();
+                    break;
+                case "get_predictions":
+                    action = new GetPredictionAction();
+                    vue = new PredictionsVue();
+                    break;
+                case "get_historique_client_voyance":
+                    action = new HistoriqueClientVoyanceAction();
+                    vue = new HistoriqueClientVoyanceVue();
+                    break;
+                case "begin_voyance":
+                    action = new BeginVoyanceAction();
+                    vue = new DefaultVue();
+                    break;
+                case "end_voyance":
+                    action = new EndVoyanceAction();
+                    vue = new DefaultVue();
+                    break;
+                case "close_voyance":
+                    action = new CloseVoyanceAction();
+                    vue = new DefaultVue();
+                    break;
                 case "get_tableaux":
                     action = new GetTableauDeBordAction();
                     vue = new TableauDeBordVue();
