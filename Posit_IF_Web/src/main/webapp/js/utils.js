@@ -40,7 +40,7 @@ function ZodiacSignToCode(zodiacSign){
 function ChineseSignToCode(chineseSign){
     switch(chineseSign.toLowerCase()){
         case 'rat': return 'Rat.png';
-        case 'bœuf': return 'Buffle.png';
+        case 'buffle': return 'Buffle.png';
         case 'tigre': return 'Tiger.png';
         case 'lapin': return 'Lapin.png';
         case 'dragon': return 'Dragon.png';

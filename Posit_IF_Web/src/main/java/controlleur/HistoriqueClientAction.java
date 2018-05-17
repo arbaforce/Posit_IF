@@ -14,8 +14,10 @@ public class HistoriqueClientAction extends Action {
         }
         
         Client client = this.service.findClient((long)request.getSession().getAttribute("client_id"));
-        List<Voyance> historique = client.getHistorique();
+        List<Voyance> r = client.getHistorique();
+        r.size();
+        System.out.println("histo " + r);
         
-        request.setAttribute("historique", historique);
+       // request.setAttribute("historique", historique);
     }
 }
